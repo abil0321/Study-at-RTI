@@ -154,6 +154,7 @@ Route::get('/external', function () {
     // return redirect()->route('home');
 
     // * bisa redirect ke route, controller, maupun external
-    // return redirect('https://laravel.com');
-    return redirect('/');
+    return redirect('https://laravel.com');
+    // return redirect('/');
 });
+
