@@ -75,4 +75,12 @@ class WorkingController extends Controller implements HasMiddleware
         unset($this->workings[$id]);
         return $this->workings;
     }
+
+    public function index_response_json()
+    {
+        return response()->json([
+            'perusahaans' => $this->workings,
+            'message' => 'List of perusahaan'
+        ], 200);
+    }
 }

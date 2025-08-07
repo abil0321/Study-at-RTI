@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WorkingController;
 use App\Http\Middleware\CheckPegawai;
 use Cassandra\Index;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +21,7 @@ Route::group(
     ],
     function () {
         Route::get('/', [WorkingController::class, 'index'])->name('index');
+        Route::get('/response_json', [WorkingController::class, 'index_response_json'])->name('index_response_json');
         Route::get('/{id}', [WorkingController::class, 'show'])->name('show');
         Route::post('/', [WorkingController::class, 'store'])->name('store');
         Route::put('/{id}', [WorkingController::class, 'update_put'])->name('update_put');
@@ -35,7 +38,7 @@ Route::get('login', function () {
     return 'Halaman Login';
 })->name('login');
 
-// * Bermain dengan request =====================================================
+// TODO: Bermain dengan request =====================================================
 Route::get('/request', function (Request $request) {
     $user = $request->all();
     // dd($user);
@@ -94,4 +97,63 @@ Route::post('/request/merge', function (Request $request) {
     // * bakalan ngereplace yang ada, mau datanya awalnya null atau tidak, ada atau tidak
     $merge = $request->merge(['email' => 'budi@gmail.com']);
     return $request->input();
+});
+
+
+// TODO: Bermain dengan response =======================================================
+// * Melakukan response header
+Route::get('/response', function () {
+    return response('Selamat Datang', 201)->header('Content-Type', 'text/plain');
+});
+
+// * Melakukan response cache Control
+Route::get('response/cache_control', function () {
+    return Response::make('this page allow to cache controle', 200)->header('Cache-Control', 'public, max_age=2628000');
+});
+
+// * Melakukan response cache Control bisa juga dilakukan via middleware route, yang dimana harus snake case di dalam route middleware
+Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function () {
+
+    Route::get('/home_1', function () {
+        return 'Home dari halaman 1 ' . request()->source_url;
+    })->name('home');
+
+    Route::get('/home_2', [HomeController::class, 'index'])->name('home_2');
+
+    Route::get('/response/privacy', function () {
+        return 'Privacy Page';
+    });
+
+    Route::get('/response/terms', function () {
+        return 'Terms Page';
+    });
+
+    // * add cookie: Memanfaatkan Cookies untuk menyimpan akses terakhir
+    Route::get('/response/cookie', function () {
+        $user = 'admin';
+        return response('Hello World Cookie', 200)->cookie('user', $user);
+    });
+
+    // * remove cookie: menghapus cookie yang sudah digunakan
+    Route::get('/response/rm_cookie', function () {
+        // return response('Logout and remove cookie', 200)->withoutCookie('user');
+
+        // * redirect ke halaman home - by route
+        // return redirect()->route('home', ['source_url' => 'logout'])->withoutCookie('user');
+
+        // * redirect ke halaman home - by controller
+        return redirect()->action([HomeController::class, 'index'], ['source_url' => 'logout'])->withoutCookie('user');
+    });
+});
+
+Route::get('/external', function () {
+    // * redirect ke halaman luar
+    // return redirect()->away('https://laravel.com');
+
+    // * redirect ke halaman home/halaman yang sama - by route
+    // return redirect()->route('home');
+
+    // * bisa redirect ke route, controller, maupun external
+    // return redirect('https://laravel.com');
+    return redirect('/');
 });
