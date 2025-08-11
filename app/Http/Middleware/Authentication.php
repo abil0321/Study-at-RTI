@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class isAuth
+class Authentication
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,10 @@ class isAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->authenticated) {
-            return redirect('login');
+        if ($request->authenticated) {
+            # code...
+            return $next($request);
         }
-        return $next($request);
+        return redirect('/');
     }
 }

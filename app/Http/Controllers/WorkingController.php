@@ -3,84 +3,100 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class WorkingController extends Controller implements HasMiddleware
 {
     public $workings;
-
     public function __construct()
     {
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i <= 3; $i++) {
             $this->workings[] = [
-                'name' => 'Title ' . $i,
-                'year' => 2001,
-                'genre' => 'Genre'
+                'name' => 'perusahaan A' . $i,
+                'jumlah_p' => 100,
+                'lokasi' => 'jawa'
             ];
-        };
+        }
     }
-
 
     public static function middleware()
     {
         return [
-            // 'isAuth', // * Semuanya
-            new Middleware('isPegawai', only: ['show']), // * Hanya show
-            // new Middleware('isPegawai', except: ['show']), // * Semuanya kecuali show
+            // 'authentication',
+            // new Middleware('isPegawai', only: ['show'])
         ];
     }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return $this->workings;
+        $data = $this->workings;
+        // return view('working.index', ['perusahaans' => $data]);
+        // return view('working.index', compact('data'))->with([
+        //     'title_page' => 'Halaman Working Index'
+        // ]);
+
+        return view('working.index')->with([
+            'perusahaans' => $data,
+            'title_page' => 'Halaman Working Index'
+        ]);
+
+        // return response()->json([
+        //     'message' => 'List data perusahaan',
+        //     'perusahaan' => $data
+        // ]);
     }
 
-    public function show($id)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return $this->workings[$id];
+        //
     }
 
-    public function store()
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        $this->workings[] = [
-            'name' => request('name'),
-            'year' => request('year'),
-            'genre' => request('genre')
-        ];
-        return $this->workings;
+        //
     }
 
-    public function update_put($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $this->workings[$id]['name'] = request('name');
-        $this->workings[$id]['year'] = request('year');
-        $this->workings[$id]['genre'] = request('genre');
-
-        return $this->workings;
+        $data = $this->workings[$id];
+        return view('working.show', compact('data'))->with([
+            'title_page' => 'Halaman Working Show'
+        ]);
     }
 
-    public function update_patch($id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $this->workings[$id]['name'] = request('name');
-        $this->workings[$id]['year'] = request('year');
-        $this->workings[$id]['genre'] = request('genre');
-
-        return $this->workings;
+        //
     }
 
-
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
-        unset($this->workings[$id]);
-        return $this->workings;
+        //
     }
 
-    public function index_response_json()
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
-        return response()->json([
-            'perusahaans' => $this->workings,
-            'message' => 'List of perusahaan'
-        ], 200);
+        //
     }
 }
