@@ -11,9 +11,31 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home')->with([
-            'title_page' => 'Halaman Home'
-        ]);
+        // TODO: If else, ternary condition, dan switch case
+        // $name = "<h1>Home</h1>";
+        $user = [
+            'name' => 'Muhammad Salsabil',
+            'email' => 'sabil@gmail.com',
+            'role' => 'admin',
+            'category' => 'wfh'
+        ];
+        return view('home.index', compact('user'));
+    }
+
+    public function experience()
+    {
+        // TODO: Looping, Continue, looping variable, attribute class condition, and include for component
+        $experiences = [
+            ['title' => 'Programmer Application', 'year' => 2022],
+            ['title' => 'Web Developer', 'year' => 2023],
+            ['title' => 'Administrator', 'year' => 2024],
+            ['title' => 'Administrator Project', 'year' => 2021],
+            ['title' => 'Front-end Web Developer', 'year' => 2022],
+            ['title' => 'Backend Web Developer', 'year' => 2023],
+            ['title' => 'Administrator Program', 'year' => 2024],
+            ['title' => 'Junior Web Developer', 'year' => 2021],
+        ];
+        return view('home.experience', compact('experiences'));
     }
 
     /**

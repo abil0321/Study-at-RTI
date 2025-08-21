@@ -12,15 +12,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group([
-    'prefix' => 'working',
-    'as' => 'working.',
-], function () {
-    Route::get('/', [WorkingController::class, 'index'])->name('index');
-    Route::get('/{id}', [WorkingController::class, 'show'])->name('show');
-    Route::post('/', [WorkingController::class, 'store'])->name('store');
-    Route::put('/', [WorkingController::class, 'edit'])->name('edit');
-    Route::delete('/', [WorkingController::class, 'destroy'])->name('destroy');
+Route::group(['prefix' => 'home', 'as' => 'home.'], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/experience', [HomeController::class, 'experience'])->name('experience');
 });
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -11,10 +11,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'authentication' => App\Http\Middleware\Authentication::class,
-            'isPegawai' => \App\Http\Middleware\PegawaiChecking::class
-        ]);
         // * Setting agar method post bisa berjalan di Route
         $middleware->validateCsrfTokens(except: [
             // '/movie' // validateCsrfTokens tidak akan aktif kecuali untuk route /movie

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Views\Composers;
+namespace App\Views;
 
 class MenuComposer
 {
@@ -13,13 +13,14 @@ class MenuComposer
         ];
 
         $authenticated = true;
-        // $authenticated = false;
+
         if ($authenticated) {
             $menu = array_merge($menu, [
                 'Logout' => '/logout',
-                'Profile' => 'profile'
+                'Profile' => '/profile'
             ]);
         }
+
         $view->with('menus', $menu);
     }
 }
