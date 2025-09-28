@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PerusahaanController extends Controller
+class WorkingController extends Controller
 {
-    private $perusahaans;
+    private $workings;
 
     public function __construct()
     {
-        $this->perusahaans = [
+        $this->workings = [
             [
                 'title' => 'Oppenheimer',
                 'description' => 'A historical drama following the life of J. Robert Oppenheimer, the physicist who helped develop the atomic bomb during World War II.',
@@ -98,8 +98,8 @@ class PerusahaanController extends Controller
      */
     public function index()
     {
-        $perusahaans = $this->perusahaans;
-        return view('perusahaan.index', compact('perusahaans'))->with([
+        $workings = $this->workings;
+        return view('working.index', compact('workings'))->with([
             'title_page' => 'List Perusahaan'
         ]);
     }
@@ -109,9 +109,7 @@ class PerusahaanController extends Controller
      */
     public function create()
     {
-        return view('perusahaan.create')->with([
-            'title_page' => 'Add New Perusahaan'
-        ]);
+        //
     }
 
     /**
@@ -119,17 +117,7 @@ class PerusahaanController extends Controller
      */
     public function store(Request $request)
     {
-        $newPerusahaan = [
-            'title' => $request['title'],
-            'description' => $request['description'],
-            'release_date' => $request['release_date'],
-            'cast' => explode(',', $request['cast']),
-            'genres' => explode(',', $request['genres']),
-            'image' => $request['image'],
-        ];
-        // dd($newPerusahaan);
-        $this->perusahaans[] = $newPerusahaan;
-        return $this->index();
+        //
     }
 
     /**
@@ -137,12 +125,7 @@ class PerusahaanController extends Controller
      */
     public function show(string $id)
     {
-        $perusahaan = $this->perusahaans[$id];
-        return view('perusahaan.show', [
-            'perusahaan' => $perusahaan,
-            'movieId' => $id,
-            'title_page' => 'Detail Perusahaan'
-        ]);
+        //
     }
 
     /**
@@ -150,16 +133,7 @@ class PerusahaanController extends Controller
      */
     public function edit(string $id)
     {
-        $perusahaan = $this->perusahaans[$id];
-        $perusahaan['cast'] = implode(',', $perusahaan['cast']);
-        $perusahaan['genres'] = implode(',', $perusahaan['genres']);
-        $data = [
-            'perusahaan' => $perusahaan,
-            'movieId' => $id,
-            'title_page' => 'Edit Perusahaan',
-        ];
-        // dd($data);
-        return view('perusahaan.edit', $data);
+        //
     }
 
     /**
@@ -167,24 +141,7 @@ class PerusahaanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $this->perusahaans[$id]['title'] = $request['title'];
-        // $this->perusahaans[$id]['description'] = $request['description'];
-        // $this->perusahaans[$id]['release_date'] = $request['release_date'];
-        // $this->perusahaans[$id]['cast'] = explode(',', $request['cast']);
-        // $this->perusahaans[$id]['genres'] = explode(',', $request['genres']);
-        // $this->perusahaans[$id]['image'] = $request['image'];
-
-        $updatePerusahaan = [
-            'title' => $request['title'],
-            'description' => $request['description'],
-            'release_date' => $request['release_date'],
-            'cast' => explode(',', $request['cast']),
-            'genres' => explode(',', $request['genres']),
-            'image' => $request['image'],
-        ];
-        $this->perusahaans[$id] = $updatePerusahaan;
-
-        return $this->index();
+        //
     }
 
     /**
@@ -192,7 +149,6 @@ class PerusahaanController extends Controller
      */
     public function destroy(string $id)
     {
-        unset($this->perusahaans[$id]);
-        return $this->index();
+        //
     }
 }

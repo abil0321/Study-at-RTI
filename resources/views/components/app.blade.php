@@ -6,24 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Using Components</title>
+    <title>Study Validation</title>
 </head>
 
-<body class="bg-gray-900 text-white">
+<body class="">
     <x-partials.header />
-
-    {{-- <section class="container mx-auto p-5">
-        {{ $slot }}
-    </section> --}}
 
     <div class="flex min-h-screen">
         <aside class="w-64 bg-gray-800 p-6 text-white">
-            {{-- {{ $sidebar }} --}}
             <x-partials.sidebar :menus="[
-                ['name' => 'Home', 'link' => '/'],
-                ['name' => 'List Perusahaan', 'link' => route('perusahaan.index')],
-                ['name' => 'About', 'link' => '#'],
-                ['name' => 'Contact', 'link' => '#'],
+                ['name' => 'Home', 'url' => route('home.index')],
+                ['name' => 'Working List', 'url' => route('working.index')],
+                ['name' => 'About', 'url' => '#'],
+                ['name' => 'Contact', 'url' => '#'],
             ]" />
         </aside>
 
