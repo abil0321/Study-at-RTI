@@ -74,7 +74,7 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
+	'dsn' => '',
 	'hostname' => 'localhost',
 	'username' => 'postgres',
 	'password' => 'ganteng321',
@@ -96,12 +96,61 @@ $db['default'] = array(
 );
 
 $db['review_codeigniter3'] = array(
-	'dsn'	=> '',
+	'dsn' => '',
 	'hostname' => 'localhost',
 	'username' => 'postgres',
 	'password' => 'ganteng321',
 	'database' => 'review_codeigniter3',
 	'dbdriver' => 'postgre',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+// $db['neondb'] = array(
+// 	'dsn' => '',
+// 	'hostname' => 'ep-floral-voice-a1g2nwja-pooler.ap-southeast-1.aws.neon.tech sslmode=require',
+// 	'username' => 'neondb_owner',
+// 	'password' => 'npg_Fec3yP0BNVRw',
+// 	'database' => 'neondb',
+// 	'dbdriver' => 'postgre',
+// 	// 'port' => 5432, // Port default PostgreSQL
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'production'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE
+// );
+
+$db['neondb'] = array(
+	// TAMBAHKAN 'options=endpoint=...' di akhir DSN
+	'dsn' => 'pgsql:host=ep-floral-voice-a1g2nwja-pooler.ap-southeast-1.aws.neon.tech;port=5432;dbname=neondb;sslmode=require;options=endpoint=ep-floral-voice-a1g2nwja',
+
+	'hostname' => '', // Biarkan kosong
+
+	'username' => 'neondb_owner',
+	'password' => 'npg_Fec3yP0BNVRw',
+
+	'database' => '', // Biarkan kosong
+	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
