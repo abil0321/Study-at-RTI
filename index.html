@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>hello world</h1>
+  <ul id="parent_ul">
+    <li class="no_1">1</li>
+    <li class="no_2">2</li>
+    <li class="no_3">3</li>
+  </ul>
+
+  <p id="lampu">Lampu Mati</p>
+  <button>Aksi</button>
+
+
+  <h2 class="select_action">Select Option</h2>
+  <select id="select">
+    <option value="char_a">a</option>
+    <option value="char_b">b</option>
+    <option value="char_c">c</option>
+  </select>
+
+
+  <h2 class="select_action_list">Select Option</h2>
+  <ul class="parent_list">
+    <li>no 1</li>
+    <li>no 2</li>
+    <li>no 3</li>
+  </ul>
+  <select id="select_list" autocomplete="off">
+    <option selected>select list</option>
+    <option value="list_1">pilih 1</option>
+    <option value="list_2">pilih 2</option>
+    <option value="list_3">pilih 3</option>
+  </select>
+
+
+  <script src="jquery-3.7.1.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      console.log('Jquery Sudah Jalan!');
+      // $('li').text('Indomaret');
+
+      $('.no_2').text('jawa mantap');
+
+      let click = true;
+      $('button').click(() => {
+        if (click) {
+          $('#lampu').text('Lampu Nyala!').css('background-color', 'yellow');
+          click = false;
+        } else {
+          $('#lampu').text('Lampu Mati Lagi!').css('background-color', 'white');;
+          click = true;
+        }
+      });
+
+      $('#select').change(() => {
+        let value = $('#select').val();
+        $('.select_action').text(value);
+      });
+
+      $('#select_list').first().attr('selected');
+      $('#select_list').change(() => {
+        let value = $('#select_list').val();
+        let items = $('.parent_list li');
+        let text_list = $('.select_action_list');
+
+        items.css('background-color', 'white');
+        text_list.text('Select Option')
+
+        if (value == 'list_1') {
+          items.first().css('background-color', 'aqua');
+          text_list.text('list_1 terpilih pake first')
+        } else if (value == 'list_2') {
+          items.next().first().css('background-color', 'aqua');
+          text_list.text('list_2 terpilih pake next dan first')
+        } else if (value == 'list_3') {
+          items.last().css('background-color', 'aqua')
+          text_list.text('list_3 terpilih pake last')
+        } else {
+          items.css('background-color', 'white');
+          text_list.text('Pilih napa cok!')
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
