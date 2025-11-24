@@ -24,16 +24,35 @@
 
 			<?php
 			$success_message = $this->session->flashdata('success');
-			if (!empty($success_message)) {
-				echo "<div class='alert alert-success mt-2'>$success_message</div>";
-			}
-
+			// if (!empty($success_message)) {
+			// 	echo "<div class='alert alert-success mt-2'>$success_message</div>";
+			// }
+			
 			$error_message = $this->session->flashdata('error');
-			if (!empty($error_message)) {
-				echo "<div class='alert alert-danger mt-2'>$error_message</div>";
-			}
-
+			// if (!empty($error_message)) {
+			// 	echo "<div class='alert alert-danger mt-2'>$error_message</div>";
+			// }
+			// echo $this->session->userdata('username');
 			?>
+			<?php if (!empty($success_message)): ?>
+				<script>
+					Swal.fire({
+						title: "Success!",
+						text: "<?php echo $success_message; ?>",
+						icon: "success"
+					});
+				</script>
+			<?php endif; ?>
+
+			<?php if (!empty($error_message)): ?>
+				<script>
+					Swal.fire({
+						title: "Error!",
+						text: "<?php echo $error_message; ?>",
+						icon: "error"
+					});
+				</script>
+			<?php endif; ?>
 
 			<?php foreach ($blogs as $key => $blog): ?>
 				<!-- Post preview-->
@@ -44,18 +63,53 @@
 					</a>
 					<p class="post-meta">
 						Posted by on <?php echo date('d F Y', strtotime($blog['date'])) ?>
-						<a href="<?php echo site_url('v1/blog/edit/' . $blog['id']); ?>" class="link-primary">Edit</a>
-						<a href="<?php echo site_url('v1/blog/destroy/' . $blog['id']); ?>" class="link-danger">Delete</a>
+						<?php
+						$session = $this->session->userdata('username');
+						if (isset($session)): ?>
+							<a href="<?php echo site_url('v1/blog/edit/' . $blog['id']); ?>" class="link-primary">Edit</a>
+							<a href="<?php echo site_url('v1/blog/destroy/' . $blog['id']); ?>" class="link-danger delete-link">Delete</a>
+						<?php endif; ?>
 					</p>
 				</div>
 				<!-- Divider-->
 				<hr class="my-4" />
 			<?php endforeach ?>
 			<!-- Pager-->
-			<div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts
-					→</a></div>
+			<?php echo $this->pagination->create_links(); ?>
+			<!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts
+					→</a></div> -->
 		</div>
 	</div>
 </div>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+
+		const deleteLink = document.querySelectorAll('.delete-link');
+
+		deleteLink.forEach((link) => {
+			link.addEventListener('click', (e) => {
+
+				// NOTE: agar link tidak berpindah atau langsung di eksekusi "e.preventDefault();"
+				e.preventDefault();
+
+				const deleteUrl = link.href;
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = deleteUrl;
+					}
+				})
+			})
+		})
+	});
+
+</script>
 <!-- Footer-->
 <?php $this->load->view('partials/footer'); ?>

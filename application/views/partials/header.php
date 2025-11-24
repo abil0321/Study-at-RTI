@@ -8,11 +8,15 @@
 	<meta name="author" content="" />
 	<title>Clean Blog - Start Bootstrap Theme</title>
 
-	<link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/assets/favicon.ico'); ?>" />
+	<link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/assets/bola.ico'); ?>" />
 	<!-- // NOTE: Bisa menggunakan "echo base_url();, link path nya diletakkan didalam "base_url()", yang dimulai dengan "./assets" dan dilanjutkan dengan path file nya "css/styles.css" jadi "base_url('assets/assets/favicon.ico')"  -->
 
 	<!-- Font Awesome icons (free version)-->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+	<!-- SweetAlert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	<!-- Google fonts-->
 	<link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
 		type="text/css" />
@@ -41,17 +45,61 @@
 					</li>
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
 					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="<?php echo site_url('v1/blog/create'); ?>">Create New Blog ++</a></li>
-					<li class="nav-item">
-						<a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">
-							<span class="btn btn-primary rounded-2 btn btn-md">Login</span>
-						</a>
-						<a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html" hidden>
-							<span class="btn btn-danger btn btn-md">Logout</span>
-						</a>
-					</li>
+					<?php
+					$session = $this->session->userdata('username');
+					if (isset($session)): ?>
+						<!-- <li class="nav-item">
+							<a href="<?php echo site_url('v1/blog-create'); ?>" class="nav-link px-lg-3 py-3 py-lg-4">
+								Create New Blog ++
+							</a>
+						</li> -->
+						<li class="nav-item">
+							<a class="nav-link px-lg-3 py-3 py-lg-4" href="<?php echo site_url('v1/blog-create'); ?>">Create New Blog
+								++</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link px-lg-3 py-3 py-lg-4 logout-link"
+								href="<?php echo site_url('v1/authentication/logout'); ?>">
+								<span class="btn-danger btn py-2 px-3 rounded-2">Logout</span>
+							</a>
+						</li>
+					<?php else: ?>
+						<li class="nav-item">
+							<a class="nav-link px-lg-3 py-3 py-lg-4" href="<?php echo site_url('v1/authentication/login'); ?>">
+								<span class="btn-primary btn py-2 px-3 rounded-2">Login</span>
+							</a>
+						</li>
+					<?php endif; ?>
 				</ul>
 			</div>
 		</div>
 	</nav>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+
+			const logoutLink = document.querySelector('.logout-link');
+
+			logoutLink.addEventListener('click', (e) => {
+
+				// NOTE: agar logoutLink tidak berpindah atau langsung di eksekusi "e.preventDefault();"
+				e.preventDefault();
+
+				const logoutUrl = logoutLink.href;
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, Logout!'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = logoutUrl;
+					}
+				})
+			})
+
+		});
+	</script>

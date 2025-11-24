@@ -28,7 +28,7 @@
 				<p>Hey, I was just wondering what kind of blog I should make this time?</p>
 				<div class="my-5">
 					<!-- <form id="contactForm" action="<?php echo site_url('v1/blog/store'); ?>" method="post" enctype="multipart/form-data"> -->
-					<?php echo form_open_multipart('v1/blog/store'); ?>
+					<?php echo form_open_multipart('v1/blog/store', array('id' => 'contactForm')); ?>
 					<div class="form-floating">
 						<input class="form-control" id="title" name="title" type="text" placeholder="Enter the title..."
 							data-sb-validations="required" value="<?php echo set_value('title'); ?>" />
@@ -89,6 +89,45 @@
 		</div>
 	</div>
 </main>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.getElementById('contactForm');
+
+		form.addEventListener('submit', function (event) {
+			// 1. Mencegah form terkirim instan
+			event.preventDefault();
+
+			// 2. Tampilkan HANYA modal KONFIRMASI
+			Swal.fire({
+				title: "You sure about that?",
+				text: "Hey there, just a friendly reminder to make sure your space is looking as lovely as can be! 😊",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, go ahead!",
+				cancelButtonText: "I'm still not sure.",
+				reverseButtons: true
+			}).then((result) => {
+				// 3. Jika dikonfirmasi, langsung submit form
+				if (result.isConfirmed) {
+					// Modal loading DIHAPUS. Langsung submit.
+					form.submit();
+				} else if (result.dismiss === Swal.DismissReason.cancel) {
+					// 4. Jika batal
+					Swal.fire({
+						title: "Canceled",
+						text: "Don't worry, your blog isn't published yet!",
+						icon: "error"
+					});
+				}
+			});
+		});
+	});
+
+
+</script>
 
 <?php $this->load->view('partials/footer'); ?>
 

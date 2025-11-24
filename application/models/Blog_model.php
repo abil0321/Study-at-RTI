@@ -1,7 +1,7 @@
 <?php
 class Blog_model extends CI_Model
 {
-	public function getBlogs()
+	public function getLimitBlogs()
 	{
 		// TODO: Menggunakan select dan from database
 		// $this->db->select();
@@ -21,14 +21,27 @@ class Blog_model extends CI_Model
 		return $this->db->get('blog');
 	}
 
-	public function getAllBlogs()
+	public function getBlogs($limit, $offset)
 	{
+		// TODO: Menggunakan filter 'LIKE'
 		$filter = $this->input->get('find');
 		$this->db->like('LOWER(title)', strtolower($filter));
+
+		// TODO: Menggunakan limit untuk mengatur pagination
+		$this->db->limit($limit, $offset);
 
 		$this->db->order_by('date', 'desc');
 		return $this->db->get('blog');
 	}
+
+	public function countAllBlogs()
+	{
+		// TODO: Menggunakan filter 'LIKE'
+		$filter = $this->input->get('find');
+		$this->db->like('LOWER(title)', strtolower($filter));
+		return $this->db->count_all_results('blog');
+	}
+
 	public function getSingleBlog($param, $value)
 	{
 		$this->db->where($param, $value);

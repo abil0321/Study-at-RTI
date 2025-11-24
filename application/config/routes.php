@@ -57,10 +57,19 @@ $route['translate_uri_dashes'] = FALSE;
 $route['welcome-page'] = 'welcome';
 $route['blog-index/(:any)/(:any)/(:num)'] = 'blog/index/$1/$2/$3';
 
-$route['v1/blog'] = 'blog';
+$route['v1/blog'] = 'blog/index';
+
+// NOTE: Route untuk pagination, agar bisa menangkap parameter angka yang dikirim dari pagination
+$route['v1/blog-index/(:num)'] = 'blog/index/$1';
+$route['v1/blog-index'] = 'blog/index';
+
 $route['v1/blog/show/(:any)'] = 'blog/show/$1';
-$route['v1/blog/create'] = 'blog/create';
+$route['v1/blog-create'] = 'blog/create';
 $route['v1/blog/store'] = 'blog/store';
 $route['v1/blog/edit/(:any)'] = 'blog/edit/$1';
 $route['v1/blog/update/(:any)'] = 'blog/update/$1';
 $route['v1/blog/destroy/(:any)'] = 'blog/destroy/$1';
+
+
+$route['v1/authentication/login'] = 'authentication/login';
+$route['v1/authentication/logout'] = 'authentication/logoout';

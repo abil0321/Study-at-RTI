@@ -90,6 +90,45 @@
 	</div>
 </main>
 
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.getElementById('contactForm');
+
+		form.addEventListener('submit', function (event) {
+			// 1. Mencegah form terkirim instan
+			event.preventDefault();
+
+			// 2. Tampilkan HANYA modal KONFIRMASI
+			Swal.fire({
+				title: "You sure about that?",
+				text: "Hey, just a friendly reminder to make sure your blog is looking its best! 😊",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, go ahead!",
+				cancelButtonText: "I'm still not sure.",
+				reverseButtons: true
+			}).then((result) => {
+				// 3. Jika dikonfirmasi, langsung submit form
+				if (result.isConfirmed) {
+					// Modal loading DIHAPUS. Langsung submit.
+					form.submit();
+				} else if (result.dismiss === Swal.DismissReason.cancel) {
+					// 4. Jika batal
+					Swal.fire({
+						title: "Canceled",
+						text: "Your blog is safe.",
+						icon: "error"
+					});
+				}
+			});
+		});
+	});
+
+
+</script>
+
 <?php $this->load->view('partials/footer'); ?>
 
 
