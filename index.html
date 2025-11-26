@@ -9,86 +9,102 @@
 </head>
 
 <body>
-  <h1>hello world</h1>
-  <ul id="parent_ul">
-    <li class="no_1">1</li>
-    <li class="no_2">2</li>
-    <li class="no_3">3</li>
+  <h1 class="judul">hello world</h1>
+  <ul id="lokasi">
+    <li class="bogor">Bogor</li>
+    <li class="bandung">Bandung</li>
+    <li>Jakarta</li>
+    <li>Depok</li>
   </ul>
 
-  <p id="lampu">Lampu Mati</p>
-  <button>Aksi</button>
-
-
-  <h2 class="select_action">Select Option</h2>
-  <select id="select">
-    <option value="char_a">a</option>
-    <option value="char_b">b</option>
-    <option value="char_c">c</option>
-  </select>
-
-
-  <h2 class="select_action_list">Select Option</h2>
-  <ul class="parent_list">
-    <li>no 1</li>
-    <li>no 2</li>
-    <li>no 3</li>
+  <ul id="gedung">
+    <li>gedung 1</li>
+    <li>gedung 2</li>
+    <li>gedung 3</li>
   </ul>
-  <select id="select_list" autocomplete="off">
-    <option selected>select list</option>
-    <option value="list_1">pilih 1</option>
-    <option value="list_2">pilih 2</option>
-    <option value="list_3">pilih 3</option>
-  </select>
 
+  <!-- <select id="type" autocomplete="off">
+    <option>select type</option>
+    <option value="lokasi">Lokasi</option>
+    <option value="gedung">Gedung</option>
+  </select> -->
+
+  <br><br>
+  <form id="input_city" action="index.html" method="post">
+    <!-- <div style="color: orange;">ada form hidden di situ 🙃</div> -->
+    <select id="type_city" autocomplete="off">
+      <option value="" selected>select type</option>
+      <option value="lokasi">Lokasi</option>
+      <option value="gedung">Gedung</option>
+    </select>
+    <input type="text" name="city" id="new_city" placeholder="Kota ..." />
+    <!-- <input type="text" name="type_city" id="type_city" autocomplete="off" hidden/> -->
+    <button type="submit">Tambah Kota</button>
+  </form>
 
   <script src="jquery-3.7.1.min.js"></script>
   <script>
     $(document).ready(function () {
       console.log('Jquery Sudah Jalan!');
-      // $('li').text('Indomaret');
+      var bekasi = $('<li>Bekasi</li>');
+      var tanggerang = $('<li>Tanggerang</li>');
 
-      $('.no_2').text('jawa mantap');
+      $('#lokasi').prepend(bekasi);
+      tanggerang.appendTo('#lokasi');
 
-      let click = true;
-      $('button').click(() => {
-        if (click) {
-          $('#lampu').text('Lampu Nyala!').css('background-color', 'yellow');
-          click = false;
+      $('.judul').after('<h2 class="sub_judul">Sub Judul</h2>');
+      $('<p>Before Judul</p>').insertBefore('.judul');
+
+      $('#type').change(() => {
+        let type = $('#type').val();
+        // NOTE: remove element
+        // $('#type_city').remove();
+        $('#error_type_city').remove();
+
+        if (type == 'lokasi' || type == 'gedung') {
+          // $('#input_city').append('<input type="text" name="type_city" id="type_city" value="' + type + '" hidden/>');
+          $('#type_city').val(type);
         } else {
-          $('#lampu').text('Lampu Mati Lagi!').css('background-color', 'white');;
-          click = true;
+          $('#type_city').val('');
+          $('#type').after('<span style="color:red" id="error_type_city"> Pilih Type Data List</span>');
+          alert('Form / Type tidak boleh kosong!');
         }
       });
 
-      $('#select').change(() => {
-        let value = $('#select').val();
-        $('.select_action').text(value);
-      });
+      let count = 0;
+      let array_data = [];
+      // NOTE: add element on submit
+      $('#input_city').submit(() => {
+        event.preventDefault();
 
-      $('#select_list').first().attr('selected');
-      $('#select_list').change(() => {
-        let value = $('#select_list').val();
-        let items = $('.parent_list li');
-        let text_list = $('.select_action_list');
+        // if ($('#type_city').length === 0) {
+        //   alert('Pilih Type Data List');
+        //   return;
+        // }
 
-        items.css('background-color', 'white');
-        text_list.text('Select Option')
+        // NOTE: ambil value dari form input
+        var new_city = $('#new_city').val();
+        let data_type = $('#type_city').val();
 
-        if (value == 'list_1') {
-          items.first().css('background-color', 'aqua');
-          text_list.text('list_1 terpilih pake first')
-        } else if (value == 'list_2') {
-          items.next().first().css('background-color', 'aqua');
-          text_list.text('list_2 terpilih pake next dan first')
-        } else if (value == 'list_3') {
-          items.last().css('background-color', 'aqua')
-          text_list.text('list_3 terpilih pake last')
+        if (new_city != '' && data_type != '') {
+          (count % 2 != 0) ? $('<li>' + new_city + '</li>').appendTo('#' + data_type) : $('#' + data_type).prepend('<li>' + new_city + '</li>');
+          array_data.unshift(new_city);
+
+          console.log(count++);
+          console.log(array_data);
+
+          // NOTE: reset form
+          $('#new_city').val('');
+          // $('#type_city').val('');
         } else {
-          items.css('background-color', 'white');
-          text_list.text('Pilih napa cok!')
+          $('#input_city').after('<span style="color:red" id="error_type_city"> Form / Type tidak boleh kosong!</span>');
+          alert('Kota / Type tidak boleh kosong!');
         }
       });
+
+      $('.bogor').before('<li style="color: orangered;">ada bogor habis di remove() di situ/sini - bawahnya bekas di empty() 🙃</li>');
+      $('.bandung').remove();
+      $('.bogor').empty();
     });
   </script>
 </body>
