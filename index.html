@@ -11,7 +11,12 @@
 <body>
   <h1 class="judul">Mau pergi kemana nich?</h1>
   <ul id="lokasi">
-    <li class="bogor">Bogor</li>
+    <li class="bogor">
+      Bogor
+      <button id="btnBogor">Jalan Ke Bogor!</button>
+      <button id="emptyBogor">empty</button>
+      <button id="removeBogor">remove</button>
+    </li>
     <li class="bandung">Bandung</li>
     <li class="bekasi">Bekasi</li>
   </ul>
@@ -19,7 +24,17 @@
   <script src="jquery-3.7.1.min.js"></script>
   <script>
     $(document).ready(function () {
-      
+      $('#btnBogor').on('click', () => {
+        alert('Saya mau ke bogor jalan-jalan!');
+      });
+      $('#emptyBogor').on('click', () => {
+        $('.bogor').empty(); //NOTE: ngosongin konten nya doang
+        alert('bogor di buat empty');
+      });
+      $('#removeBogor').on('click', () => {
+        $('.bogor').remove(); //NOTE: ngapus semuanya, ampe diri sendiri di hapus
+        alert('bogor di remove kabeh!')
+      });
     });
   </script>
 </body>
