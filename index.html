@@ -6,6 +6,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
+  <style>
+    .merah {
+      color: rgb(255, 72, 0);
+    }
+
+    .biru {
+      color: rgb(10, 153, 255);
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
@@ -13,56 +26,49 @@
   <ul id="lokasi">
     <li class="bogor">
       Bogor
-      <button id="hideBogor">Hide!</button>
-      <button id="fadeOutBogor">Fade Out!</button>
-      <button id="slideUpBogor">slideUp!</button>
     </li>
-    <li class="bandung">Bandung</li>
-    <li class="bekasi">Bekasi</li>
+    <li class="bandung">
+      Bandung
+    </li>
+    <li class="bekasi">
+      Bekasi
+    </li>
   </ul>
 
-  <button id="toggleBandung">Toggle Bandung</button>
-  <button id="slideToggleBandung">Slide Toggle Bandung</button>
-  <button id="animateBandung">Animate Bandung</button>
+  <button id="changeToRed">Jadi Merah</button>
+  <button id="changeToBlue">Jadi Biru</button>
+  <button id="changeToBig">Jadi Besar</button>
 
   <script src="jquery-3.7.1.min.js"></script>
   <script>
     $(document).ready(function () {
-      $('#hideBogor').on('click', () => {
-        $('.bogor').hide();
+      // NOTE: Add new Class statically
+      // $('.bandung').addClass('merah bold');
+
+      // NOTE: Add new class by toggle 
+      $('#changeToRed').on('click', function () {
+        $('.bandung').toggleClass('merah');
+        $('.bandung').removeClass('biru');
+      });
+      $('#changeToBlue').on('click', function () {
+        $('.bandung').toggleClass('biru');
+        $('.bandung').removeClass('merah');
       });
 
-      $('#fadeOutBogor').on('click', () => {
-        $('.bogor').fadeOut();
-      });
-      
-      $('#slideUpBogor').on('click', () => {
-        $('.bogor').slideUp();
-      });
-
-      $('#toggleBandung').on('click', () => {
-        $('.bandung').toggle();
-      });
-
-      $('#slideToggleBandung').on('click', () => {
-        $('.bandung').slideToggle();
-      });
-
-      let moved = false;
-      $('#animateBandung').on('click', () => {
-        if (!moved) {
+      let click = true;
+      $('#changeToBig').on('click', function () {
+        if (click == true) {
           $('.bandung').animate({
-            marginLeft: '500px',
-            marginTop: '500px'
+            fontSize: 100,
           });
-          moved = true;
+          click = false;
         } else {
           $('.bandung').animate({
-            marginLeft: '0px',
-            marginTop: '0px'
+            fontSize: 14,
           });
-          moved = false;
+          click = true;
         }
+        console.log(click);
       });
 
     });
