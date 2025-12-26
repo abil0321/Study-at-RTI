@@ -13,28 +13,58 @@
   <ul id="lokasi">
     <li class="bogor">
       Bogor
-      <button id="btnBogor">Jalan Ke Bogor!</button>
-      <button id="emptyBogor">empty</button>
-      <button id="removeBogor">remove</button>
+      <button id="hideBogor">Hide!</button>
+      <button id="fadeOutBogor">Fade Out!</button>
+      <button id="slideUpBogor">slideUp!</button>
     </li>
     <li class="bandung">Bandung</li>
     <li class="bekasi">Bekasi</li>
   </ul>
 
+  <button id="toggleBandung">Toggle Bandung</button>
+  <button id="slideToggleBandung">Slide Toggle Bandung</button>
+  <button id="animateBandung">Animate Bandung</button>
+
   <script src="jquery-3.7.1.min.js"></script>
   <script>
     $(document).ready(function () {
-      $('#btnBogor').on('click', () => {
-        alert('Saya mau ke bogor jalan-jalan!');
+      $('#hideBogor').on('click', () => {
+        $('.bogor').hide();
       });
-      $('#emptyBogor').on('click', () => {
-        $('.bogor').empty(); //NOTE: ngosongin konten nya doang
-        alert('bogor di buat empty');
+
+      $('#fadeOutBogor').on('click', () => {
+        $('.bogor').fadeOut();
       });
-      $('#removeBogor').on('click', () => {
-        $('.bogor').remove(); //NOTE: ngapus semuanya, ampe diri sendiri di hapus
-        alert('bogor di remove kabeh!')
+      
+      $('#slideUpBogor').on('click', () => {
+        $('.bogor').slideUp();
       });
+
+      $('#toggleBandung').on('click', () => {
+        $('.bandung').toggle();
+      });
+
+      $('#slideToggleBandung').on('click', () => {
+        $('.bandung').slideToggle();
+      });
+
+      let moved = false;
+      $('#animateBandung').on('click', () => {
+        if (!moved) {
+          $('.bandung').animate({
+            marginLeft: '500px',
+            marginTop: '500px'
+          });
+          moved = true;
+        } else {
+          $('.bandung').animate({
+            marginLeft: '0px',
+            marginTop: '0px'
+          });
+          moved = false;
+        }
+      });
+
     });
   </script>
 </body>
