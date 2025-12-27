@@ -1,10 +1,26 @@
+const ArticleStatus = ({isNew}) => {
+  return isNew && <span> - Baru Cuy!</span>
+}
+
+const NewArticle = () => {
+  return <span> - Baru Cuy!</span>
+}
 function Article(props) {
   return (
-    // NOTE: "<></>" nama nya fragment
+    // NOTE: ini "<></>" nama nya fragment
     // "<></>" sama dengan "<div></div>"
     <>
       <h3>{props.title}</h3>
-      <small> Date: {props.date}, tags: {props.tags.join(",")}</small>
+      <small>
+        Date: {props.date}, tags: {props.tags.join(",")}
+        {/* // TODO: Conditional Rendering */}
+        {/* {props.isNew ? " - Baru Cuy!" : " - Dah Lama"} */}
+        {/* {props.isNew && " - Baru Cuy!"} */}
+
+        {/* // NOTE: menggunakan component terpisah */}
+        {/* <ArticleStatus isNew={props.isNew}/> */}
+        {props.isNew && <NewArticle/>}
+      </small>
     </>
   );
 

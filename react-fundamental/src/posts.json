@@ -2,16 +2,19 @@
   {
     "title": "Tutorial React js",
     "tags": ["react.js", "frontend"],
-    "date": "2025-12-12"
+    "date": "2025-12-12",
+    "isNew": true
   },
   {
     "title": "Tutorial Optimasi React js",
     "tags": ["react.js", "frontend"],
-    "date": "2025-12-13"
+    "date": "2025-12-13",
+    "isNew": false
   },
   {
     "title": "Simple Project React js",
     "tags": ["react.js", "frontend"],
-    "date": "2025-12-14"
+    "date": "2025-12-14",
+    "isNew": false
   }
 ]

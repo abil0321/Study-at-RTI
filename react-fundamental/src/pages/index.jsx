@@ -15,8 +15,10 @@ function HomePage() {
     <>
       <h1>Simple Blog</h1>
       <Search searchChange={onSearchChange} totalData={totalPost} />
-      {posts.map(({ title, date, tags }, index) => {
-        return <Article {...{ title, date, tags }} key={index} />;
+      {posts.map((props, index) => {
+        // TODO: menggunakan spread attributes
+        // NOTE: kasusnya mirip seperti ini, jadi tuh nanti hasilnya "title={post.title} date={post.date} ...dst"
+        return <Article {...props} key={index} />;
       })}
     </>
   );
