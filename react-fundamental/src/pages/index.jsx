@@ -1,17 +1,27 @@
-import posts from "../posts.json"
+import posts from "../posts.json";
 import Article from "../components/Article";
+import { useState } from "react";
 function HomePage() {
+  // TODO: menggunakan UseState
+  // Setiap kali re-render (react memperbaharui tampilan) semuanya di reset dari awal. Maka dari itu useState hadir untuk Menyimpan Data dan Memicu Re-render. Jadi seperti ini:
+  // Menyimpan Data: Datanya tidak hilang meskipun function dijalankan ulang.
+  // Memicu Re-render: Memberitahu React: "Hei, data berubah! Tolong gambar ulang layarnya!"
+
+  // NOTE: anggap saja useState itu Ingatan (Memori) Jangka Pendek dari sebuah component.
+  // NOTE: "search" memiliki nilai awal "", lalu setSearch digunakan untuk melakukan update pada nilai value "search"
+  const [search, setSearch] = useState("");
+  const changeSearch = (event) => {
+    setSearch(event.target.value);
+  };
   return (
     <>
       <h1>Simple Blog</h1>
-      {posts.map(({title, date, tags}, index) => { // NOTE: Memasukkan item nya kedalam parameter biar tidak usah seperti ini "post.title post.title ... dst"
-          // return <Article title={title} tags={tags} date={date}/>
-          
-          // TODO: menggunakan spread attributes
-          // NOTE: kasusnya mirip seperti ini, jadi tuh nanti hasilnya "title={title} date={date} ...dst"
-          // const title = "a";
-          // const a = {title}
-          return <Article {...{title, date, tags}} key={index}/>
+      <div>
+        <input type="text" placeholder="Search" onChange={changeSearch} />
+      </div>
+      <small>ditemukan 0 data pencarian kata {search}</small>
+      {posts.map(({ title, date, tags }, index) => {
+        return <Article {...{ title, date, tags }} key={index} />;
       })}
     </>
   );
