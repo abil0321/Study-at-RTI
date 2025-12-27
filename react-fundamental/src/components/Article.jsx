@@ -1,15 +1,15 @@
-function Article() {
-  let text1 = <div> Ini adalah tools yang saya bawa a, sudah di edit</div>;
-  const tools = ["react.js", "Batu", "Lemari", "Laravel"];
+function Article(props) {
   return (
     // NOTE: "<></>" nama nya fragment
     // "<></>" sama dengan "<div></div>"
     <>
-      {text1}
-      {tools.map((tool) => {
+      <h3>{props.name}</h3>
+      {props.tools.map((tool) => {
         return (
           <>
-            <div>{tool}</div>
+            <ul>
+              <li>{tool}</li>
+            </ul>
           </>
         );
       })}

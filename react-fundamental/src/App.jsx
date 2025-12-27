@@ -7,8 +7,9 @@ function App() {
       {/* <Article />
       <div>jeda</div> */}
       
-      <Article />
-      
+      <Article name="Language" tools={["Javascript", "PHP", "Java"]}/>
+      <Article name="Framework" tools={["react.js", "Laravel", "Springboot"]}/>
+
     </div>
   )
 }
