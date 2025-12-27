@@ -3,16 +3,8 @@ function Article(props) {
     // NOTE: "<></>" nama nya fragment
     // "<></>" sama dengan "<div></div>"
     <>
-      <h3>{props.name}</h3>
-      {props.tools.map((tool) => {
-        return (
-          <>
-            <ul>
-              <li>{tool}</li>
-            </ul>
-          </>
-        );
-      })}
+      <h3>{props.title}</h3>
+      <small> Date: {props.date}, tags: {props.tags.join(",")}</small>
     </>
   );
 
