@@ -14,12 +14,13 @@ function Article(props) {
       <small>
         Date: {props.date}, tags: {props.tags.join(",")}
         {/* // TODO: Conditional Rendering */}
+        {/* // * ANCHOR: menggunakan ternary */}
         {/* {props.isNew ? " - Baru Cuy!" : " - Dah Lama"} */}
         {/* {props.isNew && " - Baru Cuy!"} */}
 
-        {/* // NOTE: menggunakan component terpisah */}
-        {/* <ArticleStatus isNew={props.isNew}/> */}
-        {props.isNew && <NewArticle/>}
+        {/* // * ANCHOR: menggunakan component terpisah */}
+        {/* <ArticleStatus isNew={props.isNew}/> */} {/* // NOTE: Menggunakan props */}
+        {props.isNew && <NewArticle/>} {/* // NOTE: Menggunakan props */}
       </small>
     </>
   );
