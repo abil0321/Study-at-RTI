@@ -1,9 +1,24 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+import "../styles/index.css";
 
 function RouterLayout() {
+  const activeStyle = ({ isActive, isPending }) => {
+    return isActive ? "active" : isPending ? "pending" : "";
+  };
+
   return (
     <>
-      <Link to={"/"}>Home </Link> | <Link to={"/blogs"}>My Blog</Link> | <Link to={"/about"}>About</Link>
+      <NavLink className={`${activeStyle} nav`} to={"/"}>
+        Home{" "}
+      </NavLink>{" "}
+      |
+      <NavLink className={`${activeStyle} nav`} to={"/blogs"}>
+        My Blog
+      </NavLink>{" "}
+      |
+      <NavLink className={`${activeStyle} nav`} to={"/about"}>
+        About
+      </NavLink>
       <Outlet />
     </>
   );
