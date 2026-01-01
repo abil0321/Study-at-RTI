@@ -1,22 +1,14 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 function Blog() {
-  // NOTE: Menggunakan state untuk set external data API
-  const [posts, setPosts] = useState([]);
-  // console.log(posts);
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((json) => setPosts(json));
-  }, []);
+  // NOTE: useLoaderData() digunakan untuk mengambil data dari loader (loader.js)
+  const posts = useLoaderData();
 
   return (
     <>
       <h1>My Blog</h1>
       <hr />
       {posts.map((item, index) => (
-        <div key={index} >
+        <div key={index}>
           <Link to={`/blog/${item.id}`}>- {item.title}</Link>
         </div>
       ))}
