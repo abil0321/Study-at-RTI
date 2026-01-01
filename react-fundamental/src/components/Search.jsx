@@ -1,5 +1,18 @@
 import { useState } from "react";
 
+const TextSearch = ({ totalData, search}) => {
+  // NOTE: Buat parameter didalam function component childred itu wajib pakai "{a, b, ...}"
+  if (search != "") {
+    return (
+      <small>
+        {totalData == 0 ? "Mencoba melakukan " : "Ditemukan " + totalData + " data dari "} pencarian kata "{search}"
+        {/* ditemukan {totalData} data pencarian kata {search} */}
+      </small>
+    );
+  }
+
+  return "";
+};
 function Search(props) {
   const [search, setSearch] = useState("");
   const onChangeSearch = () => {
@@ -19,16 +32,13 @@ function Search(props) {
           type="text"
           placeholder="Search"
           onChange={(e) => setSearch(e.target.value)}
-          // NOTE: Menggunakan event handler onKeyDown (Enter)
-          onKeyDown={searchOnKeyDown}
+          onKeyDown={searchOnKeyDown} // NOTE: Menggunakan event handler onKeyDown (Enter)
         />
         {/* // NOTE: Menggunakan event handler onClick */}
         <button onClick={onChangeSearch}>Search</button>
       </div>
-      <small>
-        {/* // NOTE: "props.totalData" menggunakan props untuk getting data dari component parent */}
-        ditemukan {props.totalData} data pencarian kata {search}
-      </small>
+
+      <TextSearch search={search} totalData={props.totalData} />
     </>
   );
 }
