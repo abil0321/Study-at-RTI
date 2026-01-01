@@ -1,8 +1,8 @@
 import "./App.css";
-import HomePage from "./pages";
-import { GlobalContext } from "./context"; // NOTE: Global Context mirip seperti database sementara
+import { RouterProvider } from "react-router-dom";
+import {router} from "./routers"
+import { GlobalContext } from "./context"; 
 function App() {
-  // NOTE: set data untuk digunakan ke context (useContext)
   const user = {
     name: "Rifky",
     age: 20,
@@ -10,10 +10,8 @@ function App() {
 
   return (
     <div className="App">
-      {/* // * ANCHOR: Menggunakan context */}
-      {/* //NOTE: Provider digunakan untuk menyediakan context */}
       <GlobalContext.Provider value={user}>
-        <HomePage />
+        <RouterProvider router={router}/>  {/* // NOTE: Konsepnya sama seperti "GlobalContext.Provider" */}
       </GlobalContext.Provider>
     </div>
   );
