@@ -81,7 +81,7 @@ function Food(props) {
   const { nama, deskripsi, foto, harga, stok } = props.foodObj;
 
   return (
-    <li className={`food ${stok ? "" : "sold-out"}`}>
+    <li className={`food ${!stok && "sold-out"}`}>
       {/* TODO: 
           Karena kita menggunakan CARA 2 (mengirim object), 
           akses datanya harus masuk ke properti 'foodObj' dulu.
@@ -101,7 +101,7 @@ function Food(props) {
           {nama} - {stok ? "For Sale" : "Sold Out!"}
         </h2>
         <p>{deskripsi}</p>
-        <Rupiah angka={harga} />
+        <Rupiah angka={stok && harga} />
       </div>
     </li>
   );
