@@ -122,7 +122,7 @@ function Rupiah(props) {
 function Footer() {
   const [Hour, setHour] = useState(new Date().getHours());
   const [Clock, setClock] = useState(new Date().toLocaleTimeString());
-  const jamBuka = 10;
+  const jamBuka = 9;
   const jamTutup = 21;
 
   useEffect(() => {
