@@ -1,188 +1,159 @@
 import React, { useEffect, useState } from "react";
 import ReactDom from "react-dom/client";
 import "./index.css";
-import data from "./data.js";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
+  const data = {
+    name: "John Doe",
+    job: "Software Engineer",
+    // NOTE: Menggunakan getter
+    get intro() {
+      return `Hello my name is ${this.name}, and I am ${this.job}!`;
+    },
+    description:
+      "Maiores explicabo consequatur et laboriosam excepturi. Vitae omnis ex temporibus. Asperiores nam veniam velit. Tempora veniam quisquam occaecati harum. Et quidem fugit exercitationem id qui. Nesciunt nostrum ducimus harum autem esse nisi sint laborum.",
+    tech: ["Laravel", "React", "Java"],
+    socmed: [
+      {
+        icon: "facebook",
+        link: "https://www.facebook.com/",
+      },
+      {
+        icon: "twitter",
+        link: "https://www.twitter.com/",
+      },
+      {
+        icon: "instagram",
+        link: "https://www.instagram.com/",
+      },
+      {
+        icon: "linkedin",
+        link: "https://www.linkedin.com/",
+      },
+      {
+        icon: "github",
+        link: "https://www.github.com/",
+      },
+    ],
+  };
+
   return (
     <div className="container">
-      <Header />
-      <Menu />
-      <Footer />
+      <Card data={data} />
     </div>
   );
 }
 
-function Header() {
-  const style = {
-    color: "red",
-    fontSize: "50px",
-    textTransform: "uppercase",
-  };
-  return <h1 style={style}>Warteg Jamaluddin M-Top</h1>;
-}
-
-// SECTION: MENU --------------------------------------
-function Menu() {
-  // Asumsi 'data' diambil dari import atau state di luar snippet ini
-  const food = data;
-  const countFood = food.length;
+function Card({ data }) {
+  const { name, job, intro, description, tech, socmed } = data;
 
   return (
-    <main className="menu">
-      <h2>Menu Kita</h2>
-      {/* TODO: Menampilkan daftar menu */}
-
-      {/* // NOTE: Menggunakan single expression 
-      {countFood > 0 && ( ...) */}
-
-      {/* // NOTE: Menggunakan ternary */}
-      {countFood > 0 ? (
-        // TODO: Menggunakan React Fragment untuk mengelompokkan beberapa elemen / membungkus root element lebih dari 1
-        // NOTE: CARA 1 (menggunakan React.Fragment): <React.Fragment></React.Fragment>
-        // NOTE: CARA 2 (menggunakan <>):
-        <>
-          <p>
-            Aneka makanan Indonesia yang disajikan oleh Warung Jamaluddin M-Top
-            sebagai pemenuhan makanan kesehatan yang diperlukan dalam kehidupan
-            sehari-hari
-          </p>
-          <ul className="foods">
-            {data.map((food, index) => (
-              /* TODO: 
-                Di bawah ini adalah perbandingan dua cara passing props.
-              */
-
-              // NOTE: CARA 1 (LAMA): Mengirim props satu per satu
-              // <Food
-              //   nama={food.nama}
-              //   deskripsi={food.deskripsi}
-              //   foto={food.foto}
-              //   harga={food.harga}
-              //   stok={food.stok}
-              //   key={index}
-              // />
-
-              // NOTE: CARA 2 (BARU): Mengirim seluruh object (lebih ringkas)
-              <Food foodObj={food} key={index} />
-            ))}
-          </ul>
-        </>
-      ) : (
-        <h1>Lagi Kosong Guys, Dateng lagi nanti 😙</h1>
-      )}
-    </main>
-  );
-}
-
-//* ANCHOR: Component Function Menu
-function Food(props) {
-  // Kita bisa men-destructure props agar kodingan lebih bersih
-  const { nama, deskripsi, foto, harga, stok } = props.foodObj;
-
-  return (
-    <li className={`food ${!stok && "sold-out"}`}>
-      {/* TODO: 
-          Karena kita menggunakan CARA 2 (mengirim object), 
-          akses datanya harus masuk ke properti 'foodObj' dulu.
-
-          Karena kita menggunakan CARA 3 (mengirim object lalu destructure), 
-          akses datanya langsung ke properti yang diinginkan.
-      */}
-
-      {/* //NOTE: CARA 1 (akses langsung): src={props.foto} */}
-
-      {/* //NOTE: CARA 2 (akses via object): src={props.foodObj.foto} */}
-
-      {/* //NOTE: CARA 3 (akses via destructure props.object): */}
-      <img src={foto} width={100} height={70} alt={nama} />
-      <div>
-        <h2>
-          {nama} - {stok ? "For Sale" : "Sold Out!"}
-        </h2>
-        <p>{deskripsi}</p>
-        <Rupiah angka={stok && harga} />
+    <>
+      <div className="card">
+        <CardHeader name={name} job={job} socmed={socmed} />
+        <CardBottom intro={intro} desc={description} name={name} tech={tech} />
       </div>
-    </li>
+    </>
   );
 }
-function Rupiah(props) {
-  const formatAngka = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-  }).format(props.angka);
 
-  return <span>{props.angka ? formatAngka : "not for sale"}</span>;
+// SECTION: CardHeader
+function CardHeader({ name, job, socmed }) {
+  return (
+    <>
+      <div className="top">
+        <SocialButtons position="left" socmed={socmed} />
+        <SocialButtons position="right" socmed={socmed} />
+
+        <div className="text">
+          <div className="name-wrapper">
+            <div className="name">{name}</div>
+          </div>
+          <div className="title">{job}</div>
+        </div>
+      </div>
+    </>
+  );
 }
-// END SECTION MENU
+// * ANCHOR: CardHeader Component
+function Buttons({ icon, link }) {
+  return (
+    <>
+      <button onClick={() => window.open(link, "__blank")}>
+        <i className={`fab fa-${icon}`}></i>
+      </button>
+    </>
+  );
+}
 
-// SECTION: FOOTER --------------------------------------
-function Footer() {
-  const [Hour, setHour] = useState(new Date().getHours());
-  const [Clock, setClock] = useState(new Date().toLocaleTimeString());
-  const jamBuka = 9;
-  const jamTutup = 21;
+function SocialButtons({ position, socmed }) {
+  const middleIndex = Math.floor(socmed.length / 2);
+  const socialMediaLeft = socmed.slice(0, middleIndex);
+  const socialMediaRight = socmed.slice(middleIndex);
 
-  useEffect(() => {
-    setInterval(() => {
-      setHour(new Date().getHours());
-      setClock(new Date().toLocaleTimeString());
-    }, 1000);
-  }, []);
-
-  const isOpen = Hour >= jamBuka && Hour <= jamTutup;
-
-  if (isOpen) {
+  if (position === "right") {
     return (
-      <FooterOpenHour jamBuka={jamBuka} jamTutup={jamTutup} clock={Clock} />
+      <div className="social-buttons right">
+        {socialMediaRight.map(({ icon, link }, index) => (
+          <Buttons key={index} icon={icon} link={link} />
+        ))}
+      </div>
     );
   } else {
     return (
-      <FooterCloseHour jamBuka={jamBuka} jamTutup={jamTutup} clock={Clock} />
+      <div className="social-buttons">
+        {socialMediaLeft.map((item, index) => (
+          <Buttons key={index} icon={item.icon} link={item.link} />
+        ))}
+      </div>
     );
   }
 }
 
-//* ANCHOR: Component Function Footer
-// NOTE: CARA 1 (menggunakan props dalam function): function FooterOpenHour(props) {
+// END CardHeader
 
-// NOTE: CARA 2 (menggunakan props destructuring dalam function):
-function FooterOpenHour({ jamBuka, jamTutup, clock }) {
+// SECTION: CardBottom
+function CardBottom({ intro, desc, name, tech }) {
   return (
-    <footer className="footer" style={{ textAlign: "center" }}>
-      <p style={{ textAlign: "center" }}>
-        Warteg Jamaluddin M-Top udah buka guys 🥳
-      </p>
-      <div className="order">
-        <p>
-          {new Date().getFullYear()} Warung Jamaluddin M-Top | Jam Buka{" "}
-          {jamBuka} - Jam Tutup {jamTutup}
-        </p>
-        <div>{clock}</div>
-        <button className="btn">Order</button>
+    <>
+      <div className="bottom">
+        <Descriptions intro={intro} desc={desc} name={name} />
+        <Tech tech={tech} />
       </div>
-    </footer>
+    </>
   );
 }
-function FooterCloseHour({ jamBuka, jamTutup, clock }) {
+
+// * ANCHOR: CardBottom Component
+function Descriptions({ intro, desc, name }) {
   return (
-    <footer className="footer" style={{ textAlign: "center" }}>
-      <p style={{ textAlign: "center" }}>
-        {`Warteg Jamaluddin M-Top lagi tutup Guys, dateng lagi di jam ${jamBuka}:00 - ${jamTutup}:00 🥲`}
-      </p>
-      <div className="order">
-        <p>
-          {new Date().getFullYear()} Warung Jamaluddin M-Top | Jam Buka{" "}
-          {jamBuka} - Jam Tutup {jamTutup}
-        </p>
-        <div>{clock}</div>
-      </div>
-    </footer>
+    <>
+      <div className="desc">{intro}</div>
+      <div className="desc">{desc}</div>
+    </>
   );
 }
-// END SECTION Footer
+
+function Tech({ tech }) {
+  return (
+    <>
+      <div className="buttons">
+        {tech.map((item, index) => (
+          <button key={index}>
+            <i
+              className={`fa-brands fa-${item.toLowerCase()}`}
+              aria-hidden="true"
+            ></i>
+            {" - "}
+            {item}
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+// END CardBottom
 
 const root = ReactDom.createRoot(document.getElementById("root"));
 root.render(
