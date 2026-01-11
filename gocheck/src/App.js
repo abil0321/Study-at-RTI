@@ -11,7 +11,6 @@ function App() {
   const [items, setItems] = useState(listItems);
   function handleAddData(item) {
     setItems((items) => [...items, item]);
-    console.log(items);
   }
   return (
     <div className="app">
@@ -43,7 +42,7 @@ function Form({ onAddItem }) {
       done: false,
     };
     onAddItem(newData);
-    console.log(newData);
+    setTitle("");
   }
 
   return (
@@ -85,7 +84,6 @@ function Item({ title, done }) {
             checked={check}
             onChange={() => {
               setCheck(!check);
-              console.log(check);
             }}
           />
           <span
