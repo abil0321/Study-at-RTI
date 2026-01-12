@@ -31,7 +31,7 @@ function Form({ onAddItem }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!title) {
+    if (title.trim() === "") {
       return;
     }
 
@@ -60,18 +60,34 @@ function Form({ onAddItem }) {
   );
 }
 function CheckList({ data }) {
+  const [notes, setNotes] = useState(data);
+
+  {
+    /* NOTE: delete note, dengan filter berdasarkan 'id' yang tidak sama atau pernah di pilih/click di handleDeleteNote(id) */
+  }
+  function handleDeleteNote(id) {
+    const updatedData = notes.filter((data) => data.id != id);
+    setNotes(updatedData);
+  }
+
   return (
     <div className="list">
       <ul>
-        {data.map(({ id, title, done }) => (
-          <Item key={id} title={title} done={done} />
+        {notes.map(({ id, title, done }) => (
+          <Item
+            key={id}
+            title={title}
+            done={done}
+            id={id}
+            handleDelete={handleDeleteNote} // NOTE: fungsi untuk menghapus data dijadikan props
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Item({ title, done }) {
+function Item({ title, done, id, handleDelete }) {
   const [isOpen, setIsOpen] = useState(true);
   const [check, setCheck] = useState(done);
 
@@ -93,7 +109,9 @@ function Item({ title, done }) {
             {title}
           </span>
           <span onClick={() => setCheck(!check)}>{check ? "✅" : "❌"}</span>
-          <button onClick={() => setIsOpen(!isOpen)}>Remove</button>
+          {/* <button onClick={() => setIsOpen(!isOpen)}>Remove</button> */}
+          <button onClick={() => handleDelete(id)}>Remove</button>{" "}
+          {/* NOTE: Melakukan lifting state biar dia diatas karena loopingnya ga di sini cuy */}
         </li>
       )}
     </>
