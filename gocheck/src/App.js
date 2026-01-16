@@ -62,11 +62,9 @@ function Form({ onAddItem }) {
 function CheckList({ data }) {
   const [notes, setNotes] = useState(data);
 
-  {
-    /* NOTE: delete note, dengan filter berdasarkan 'id' yang tidak sama atau pernah di pilih/click di handleDeleteNote(id) */
-  }
+  /* NOTE: delete note, dengan filter berdasarkan 'id' yang tidak sama atau pernah di pilih/click di handleDeleteNote(id) */
   function handleDeleteNote(id) {
-    const updatedData = notes.filter((data) => data.id != id);
+    const updatedData = notes.filter((data) => data.id !== id);
     setNotes(updatedData);
   }
 
@@ -88,32 +86,32 @@ function CheckList({ data }) {
 }
 
 function Item({ title, done, id, handleDelete }) {
-  const [isOpen, setIsOpen] = useState(true);
+  // const [isOpen, setIsOpen] = useState(true);
   const [check, setCheck] = useState(done);
 
   return (
     <>
-      {isOpen && (
-        <li>
-          <input
-            type="checkbox"
-            checked={check}
-            onChange={() => {
-              setCheck(!check);
-            }}
-          />
-          <span
-            onClick={() => setCheck(!check)}
-            className={`${check ? "lineChecked" : ""}`}
-          >
-            {title}
-          </span>
-          <span onClick={() => setCheck(!check)}>{check ? "✅" : "❌"}</span>
-          {/* <button onClick={() => setIsOpen(!isOpen)}>Remove</button> */}
-          <button onClick={() => handleDelete(id)}>Remove</button>{" "}
-          {/* NOTE: Melakukan lifting state biar dia diatas karena loopingnya ga di sini cuy */}
-        </li>
-      )}
+      {/* {isOpen && ( */}
+      <li>
+        <input
+          type="checkbox"
+          checked={check}
+          onChange={() => {
+            setCheck(!check);
+          }}
+        />
+        <span
+          onClick={() => setCheck(!check)}
+          className={`${check ? "lineChecked" : ""}`}
+        >
+          {title}
+        </span>
+        <span onClick={() => setCheck(!check)}>{check ? "✅" : "❌"}</span>
+        {/* <button onClick={() => setIsOpen(!isOpen)}>Remove</button> */}
+        <button onClick={() => handleDelete(id)}>Remove</button>{" "}
+        {/* NOTE: Melakukan lifting state biar dia diatas karena loopingnya ga di sini cuy */}
+      </li>
+      {/* )} */}
     </>
   );
 }
