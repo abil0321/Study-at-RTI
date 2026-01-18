@@ -4,7 +4,6 @@ import Form from "./components/Form";
 import CheckList from "./components/Checklist";
 import Stats from "./components/Stats";
 
-// test
 function App() {
   const [items, setItems] = useState([]);
   function handleAddData(item) {
