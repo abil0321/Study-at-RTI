@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-// test
 function App() {
   const [items, setItems] = useState([]);
   function handleAddData(item) {
